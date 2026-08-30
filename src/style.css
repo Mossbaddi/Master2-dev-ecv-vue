@@ -146,6 +146,97 @@ h2 {
   text-align: center;
 }
 
+.proposal {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  padding: clamp(1.5rem, 5vw, 4rem);
+  border-radius: 2rem;
+  color: #ffffff;
+  background: #17233c;
+}
+
+.proposal-copy h2 {
+  color: #ffffff;
+}
+
+.proposal-copy > p:last-child {
+  color: #b9c4d6;
+  line-height: 1.7;
+}
+
+.event-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.field-wide,
+.form-error {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  color: #dbe2ee;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  border: 1px solid #46536b;
+  border-radius: 0.75rem;
+  padding: 0.8rem 0.9rem;
+  color: #17233c;
+  background: #ffffff;
+}
+
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible,
+.primary-button:focus-visible {
+  outline: 3px solid #bba9ff;
+  outline-offset: 2px;
+}
+
+.primary-button {
+  border: 0;
+  border-radius: 0.75rem;
+  padding: 0.9rem 1rem;
+  color: #ffffff;
+  background: #7b5ce1;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.primary-button:hover {
+  background: #9277ec;
+}
+
+.form-error {
+  margin: 0;
+  color: #ffc7c7;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 @media (max-width: 46rem) {
   .shell {
     padding-block: 3rem;
@@ -167,5 +258,18 @@ h2 {
   .card-topline {
     align-items: start;
     flex-direction: column;
+  }
+
+  .proposal {
+    grid-template-columns: 1fr;
+  }
+
+  .event-form {
+    grid-template-columns: 1fr;
+  }
+
+  .field-wide,
+  .form-error {
+    grid-column: auto;
   }
 }
