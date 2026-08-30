@@ -4,6 +4,11 @@ import EventCard from './EventCard.vue'
 
 defineProps<{
   events: SchoolEvent[]
+  favoriteIds: number[]
+}>()
+
+defineEmits<{
+  toggleFavorite: [eventId: number]
 }>()
 </script>
 
@@ -14,7 +19,11 @@ defineProps<{
 
   <ul v-else class="event-grid">
     <li v-for="event in events" :key="event.id">
-      <EventCard :event="event" />
+      <EventCard
+        :event="event"
+        :is-favorite="favoriteIds.includes(event.id)"
+        @toggle-favorite="$emit('toggleFavorite', $event)"
+      />
     </li>
   </ul>
 </template>

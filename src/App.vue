@@ -2,11 +2,13 @@
 import { ref } from 'vue'
 import EventForm from './components/EventForm.vue'
 import EventList from './components/EventList.vue'
+import { useFavorites } from './composables/useFavorites'
 import { initialEvents } from './data/events'
 import type { EventDraft } from './types/event'
 
 const events = ref([...initialEvents])
 const successMessage = ref('')
+const { favoriteIds, toggleFavorite } = useFavorites(initialEvents.map((event) => event.id))
 
 function addEvent(eventDraft: EventDraft) {
   const nextId = Math.max(0, ...events.value.map((event) => event.id)) + 1
@@ -28,10 +30,17 @@ function addEvent(eventDraft: EventDraft) {
         <p class="eyebrow">Agenda</p>
         <h2>Événements à venir</h2>
       </div>
-      <p class="event-count">{{ events.length }} événement{{ events.length > 1 ? 's' : '' }}</p>
+      <div class="catalogue-stats">
+        <p class="event-count">{{ events.length }} événement{{ events.length > 1 ? 's' : '' }}</p>
+        <p class="favorite-count">{{ favoriteIds.length }} favori{{ favoriteIds.length > 1 ? 's' : '' }}</p>
+      </div>
     </div>
 
-    <EventList :events="events" />
+    <EventList
+      :events="events"
+      :favorite-ids="favoriteIds"
+      @toggle-favorite="toggleFavorite"
+    />
   </main>
 
   <aside class="shell">
