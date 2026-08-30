@@ -14,12 +14,20 @@ const event: SchoolEvent = {
 
 describe('EventCard', () => {
   it('affiche toutes les informations utiles de l’événement', () => {
-    const wrapper = mount(EventCard, { props: { event } })
+    const wrapper = mount(EventCard, { props: { event, isFavorite: false } })
 
     expect(wrapper.get('h3').text()).toBe(event.title)
     expect(wrapper.text()).toContain(event.location)
     expect(wrapper.text()).toContain(event.category)
     expect(wrapper.text()).toContain(event.description)
     expect(wrapper.get('time').attributes('datetime')).toBe(event.date)
+  })
+
+  it('émet l’identifiant lorsque le favori est demandé', async () => {
+    const wrapper = mount(EventCard, { props: { event, isFavorite: false } })
+
+    await wrapper.get('.favorite-button').trigger('click')
+
+    expect(wrapper.emitted('toggleFavorite')).toEqual([[event.id]])
   })
 })

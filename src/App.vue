@@ -3,11 +3,13 @@ import { computed, ref } from 'vue'
 import EventForm from './components/EventForm.vue'
 import EventFilters from './components/EventFilters.vue'
 import EventList from './components/EventList.vue'
+import { useFavorites } from './composables/useFavorites'
 import { initialEvents } from './data/events'
 import type { EventCategory, EventDraft } from './types/event'
 
 const events = ref([...initialEvents])
 const successMessage = ref('')
+const { favoriteIds, toggleFavorite } = useFavorites(initialEvents.map((event) => event.id))
 const query = ref('')
 const selectedCategory = ref<EventCategory | 'all'>('all')
 
@@ -45,15 +47,20 @@ function addEvent(eventDraft: EventDraft) {
         <p class="eyebrow">Agenda</p>
         <h2>Événements à venir</h2>
       </div>
-      <p class="event-count">
-        {{ filteredEvents.length }} résultat{{ filteredEvents.length > 1 ? 's' : '' }}
-      </p>
+      <div class="catalogue-stats">
+        <p class="event-count">
+          {{ filteredEvents.length }} résultat{{ filteredEvents.length > 1 ? 's' : '' }}
+        </p>
+        <p class="favorite-count">{{ favoriteIds.length }} favori{{ favoriteIds.length > 1 ? 's' : '' }}</p>
+      </div>
     </div>
 
     <EventFilters v-model:query="query" v-model:category="selectedCategory" />
     <EventList
       :events="filteredEvents"
+      :favorite-ids="favoriteIds"
       empty-message="Aucun événement ne correspond à ces critères. Essayez un autre filtre."
+      @toggle-favorite="toggleFavorite"
     />
   </main>
 
