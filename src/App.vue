@@ -1,14 +1,31 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import EventForm from './components/EventForm.vue'
+import EventFilters from './components/EventFilters.vue'
 import EventList from './components/EventList.vue'
 import { useFavorites } from './composables/useFavorites'
 import { initialEvents } from './data/events'
-import type { EventDraft } from './types/event'
+import type { EventCategory, EventDraft } from './types/event'
 
 const events = ref([...initialEvents])
 const successMessage = ref('')
 const { favoriteIds, toggleFavorite } = useFavorites(initialEvents.map((event) => event.id))
+const query = ref('')
+const selectedCategory = ref<EventCategory | 'all'>('all')
+
+const filteredEvents = computed(() => {
+  const normalizedQuery = query.value.trim().toLocaleLowerCase('fr-FR')
+
+  return events.value.filter((event) => {
+    const matchesCategory = selectedCategory.value === 'all' || event.category === selectedCategory.value
+    const searchableContent = [event.title, event.location, event.description]
+      .join(' ')
+      .toLocaleLowerCase('fr-FR')
+    const matchesQuery = normalizedQuery === '' || searchableContent.includes(normalizedQuery)
+
+    return matchesCategory && matchesQuery
+  })
+})
 
 function addEvent(eventDraft: EventDraft) {
   const nextId = Math.max(0, ...events.value.map((event) => event.id)) + 1
@@ -31,14 +48,18 @@ function addEvent(eventDraft: EventDraft) {
         <h2>Événements à venir</h2>
       </div>
       <div class="catalogue-stats">
-        <p class="event-count">{{ events.length }} événement{{ events.length > 1 ? 's' : '' }}</p>
+        <p class="event-count">
+          {{ filteredEvents.length }} résultat{{ filteredEvents.length > 1 ? 's' : '' }}
+        </p>
         <p class="favorite-count">{{ favoriteIds.length }} favori{{ favoriteIds.length > 1 ? 's' : '' }}</p>
       </div>
     </div>
 
+    <EventFilters v-model:query="query" v-model:category="selectedCategory" />
     <EventList
-      :events="events"
+      :events="filteredEvents"
       :favorite-ids="favoriteIds"
+      empty-message="Aucun événement ne correspond à ces critères. Essayez un autre filtre."
       @toggle-favorite="toggleFavorite"
     />
   </main>

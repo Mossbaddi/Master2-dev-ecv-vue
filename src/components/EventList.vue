@@ -5,6 +5,7 @@ import EventCard from './EventCard.vue'
 defineProps<{
   events: SchoolEvent[]
   favoriteIds: number[]
+  emptyMessage?: string
 }>()
 
 defineEmits<{
@@ -14,7 +15,7 @@ defineEmits<{
 
 <template>
   <p v-if="events.length === 0" class="empty-state">
-    Aucun événement n'est encore programmé. Revenez bientôt.
+    {{ emptyMessage ?? "Aucun événement n'est encore programmé. Revenez bientôt." }}
   </p>
 
   <ul v-else class="event-grid">

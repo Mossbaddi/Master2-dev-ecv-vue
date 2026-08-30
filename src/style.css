@@ -103,6 +103,21 @@ h2 {
   list-style: none;
 }
 
+.filters {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(12rem, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #dce3ee;
+  border-radius: 1rem;
+  background: #ffffff;
+}
+
+.filter-field label {
+  color: #52617c;
+}
+
 .event-grid > li {
   display: flex;
 }
@@ -291,6 +306,10 @@ h2 {
   }
 
   .event-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
     grid-template-columns: 1fr;
   }
 
