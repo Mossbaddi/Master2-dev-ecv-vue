@@ -88,7 +88,12 @@ h2 {
   list-style: none;
 }
 
+.event-grid > li {
+  display: flex;
+}
+
 .event-card {
+  width: 100%;
   min-height: 19rem;
   padding: 1.5rem;
   border: 1px solid #dce3ee;
