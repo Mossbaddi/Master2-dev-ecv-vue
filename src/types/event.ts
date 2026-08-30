@@ -8,3 +8,5 @@ export interface SchoolEvent {
   category: EventCategory
   description: string
 }
+
+export type EventDraft = Omit<SchoolEvent, 'id'>
