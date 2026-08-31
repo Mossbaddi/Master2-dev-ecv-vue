@@ -3,6 +3,7 @@ import { defineConfig } from 'vitest/config'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/Master2-dev-ecv-vue/',
   plugins: [vue()],
   test: {
     environment: 'jsdom',
