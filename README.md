@@ -2,6 +2,8 @@
 
 Projet fil rouge de la piscine Vue.js, GitHub et Copilot destinée aux étudiants de Master 2 Développement de l'ECV.
 
+Application déployée : [ECV Events sur GitHub Pages](https://mossbaddi.github.io/Master2-dev-ecv-vue/)
+
 Le dépôt évolue volontairement issue par issue. L'historique des pull requests permet de reconstruire la semaine de cours dans l'ordre.
 
 ## Prérequis
@@ -17,10 +19,18 @@ npm ci
 npm run dev
 ```
 
+Pour vérifier localement le build tel qu'il sera publié :
+
+```bash
+npm run build
+npm run preview
+```
+
 ## Vérifications
 
 ```bash
 npm run typecheck
+npm run test
 npm run build
 ```
 
